@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "ReactRealmTSTemplateApp",
+    "slug": "ReactRealmTSTemplateApp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

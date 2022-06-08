@@ -12,12 +12,24 @@
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
     "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-get-random-values": "~1.7.2",
-    "realm": "^10.13.0"
+    "react-native-get-random-values": "^1.7.2",
+    "react-native-web": "0.17.1",
+    "realm": "^10.13.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@babel/runtime": "^7.18.3",
+    "@react-native-community/eslint-config": "^3.0.2",
+    "@types/react-native": "^0.67.8",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "typescript": "^4.7.3"
+  },
+  "resolutions": {
+    "@types/react": "^17"
   },
   "name": "reactrealmtstemplateapp",
   "version": "1.0.0",

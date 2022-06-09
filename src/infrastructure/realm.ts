@@ -1,5 +1,6 @@
 import Realm from "realm";
 import TaskSchema from "../business/models/Task";
+import UserSchema from "../business/models/User";
 
 const getRealm = async () => {
   const app = new Realm.App({ id: "task-amxgo" });
@@ -7,15 +8,12 @@ const getRealm = async () => {
   const User = await app.logIn(credentials);
   return await Realm.open({
     path: "todo",
-    schema: [TaskSchema],
-    sync: { user: User, partitionValue: "testTask"},
+    schema: [TaskSchema, UserSchema],
+    sync: { user: User, partitionValue: "testTask" },
   });
 };
 
 export default getRealm;
-
-
-
 
 // {
 //   "title": "Task",

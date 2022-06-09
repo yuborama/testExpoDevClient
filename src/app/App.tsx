@@ -6,8 +6,8 @@ import Home from "./pages/Home";
 const App = () => {
   return (
     <RealmContextProvider>
-      <MyStackCustom />
-      {/* <Home /> */}
+      {/* <MyStackCustom /> */}
+      <Home />
     </RealmContextProvider>
   );
 };

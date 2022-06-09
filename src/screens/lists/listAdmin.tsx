@@ -74,58 +74,61 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 const ListAdmin: FC = () => {
   const navigation = useNavigation<navigationScreenProp>();
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <Save>
-        <AtomWrapper
-          customCSS={css`
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-          `}
-        >
-          <ButtonAtom
+    <>
+      <View
+        style={{
+          flex: 1,
+
+        }}
+      >
+        <Save>
+          <AtomWrapper
             customCSS={css`
               flex-direction: row;
               align-items: center;
+              justify-content: space-between;
             `}
-            onPress={() => {
-              navigation.navigate("home");
-            }}
           >
-            <Icon name="chevron-left" color="#4684BE" size={35} />
-            <Icon type="font-awesome" name="paw" color="#4684BE" size={25} />
-          </ButtonAtom>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-            }}
-          >
-            Lista de Administradores
-          </Text>
-          <Icon name="search" color="#4684BE" size={35} />
-        </AtomWrapper>
-        <ScrollView>
-          {dataUser.map((item) => (
-            <MoleculeCardAnimal key={item.document} {...item} />
-          ))}
-        </ScrollView>
-        <Icon
-          type="material-community"
-          name="plus"
-          color="#442484"
-          reverse
-          containerStyle={Styles.btnContainer}
-          onPress={() => {
-            navigation.navigate("formAdmin");
-          }}
-        />
-      </Save>
-    </View>
+            <ButtonAtom
+              customCSS={css`
+                flex-direction: row;
+                align-items: center;
+              `}
+              onPress={() => {
+                navigation.navigate("home");
+              }}
+            >
+              <Icon name="chevron-left" color="#4684BE" size={35} />
+              <Icon type="font-awesome" name="paw" color="#4684BE" size={25} />
+            </ButtonAtom>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Lista de Administradores
+            </Text>
+            <Icon name="search" color="#4684BE" size={35} />
+          </AtomWrapper>
+          <ScrollView>
+            {dataUser.map((item) => (
+              <MoleculeCardAnimal key={item.document} {...item} />
+            ))}
+          </ScrollView>
+        </Save>
+      </View>
+      <Icon
+        type="material-community"
+        name="plus"
+        color="#442484"
+        reverse
+        containerStyle={Styles.btnContainer}
+        onPress={() => {
+          navigation.navigate("formAdmin");
+        }}
+      />
+    </>
   );
 };
 export default ListAdmin;

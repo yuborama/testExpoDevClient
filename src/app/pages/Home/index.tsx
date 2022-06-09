@@ -18,7 +18,7 @@ import { useMainContext } from "../../../business/context/RealmContext";
 
 const Home = () => {
   const realm = useMainContext();
-
+console.log(`realm`, realm);
   const [taskName, setTaskName] = useState("");
 
   const [data, setData] = useState<

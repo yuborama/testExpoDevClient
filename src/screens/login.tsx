@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFormik } from "formik";
 import React, { FC } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { css } from "styled-components/native";
 import * as Yup from "yup";
 import { navigationScreenProp } from "../../stack";
@@ -17,12 +18,8 @@ const LoginScreen: FC = () => {
   const { dispatchUser } = USERSTATE();
   const formik = useFormik({
     initialValues: {
-      name: ``,
-      cc: ``,
       email: ``,
-      tel: ``,
       password: ``,
-      passwordConfirm: ``,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -37,19 +34,24 @@ const LoginScreen: FC = () => {
           .objects<IUser>("User")
           .filtered(`email = "${email}"`);
         const userData = users.find((data) => data.email === email);
-        console.log(`mi data`, userData);
-        if (userData?.password === password) {
-          dispatchUser({
-            type: "SETUSER",
-            payload: userData,
-            //   name: userData.name,
-            //   cc: userData.cc,
-            //   email: userData.email,
-          });
-          navigation.navigate("home");
+        // console.log(`mi data`, userData);
+        if (userData) {
+          if (userData?.password === password) {
+            dispatchUser({
+              type: "SETUSER",
+              payload: userData,
+            });
+            userData.role === "user"
+              ? navigation.navigate("userpage", { user: userData })
+              : navigation.navigate("home");
+          } else {
+            Alert.alert("Contraseña incorrecta");
+          }
+        } else {
+          Alert.alert("Usuario no encontrado");
         }
       } else {
-        console.log("no hay conexion a internet");
+        Alert.alert("no hay conexion a internet");
       }
     },
   });

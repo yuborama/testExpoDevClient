@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/stack";
 
 import screen1 from "./src/screens/screen1";
-import screen2 from "./src/screens/screen2";
+import userpage from "./src/screens/userPage";
 import home from "./src/screens/home";
 import ScreenFormUser from "./src/screens/forms/user";
 import ScreenFormAdmin from "./src/screens/forms/admin";
@@ -14,10 +14,11 @@ import ListAdmin from "./src/screens/lists/listAdmin";
 import ListOwner from "./src/screens/lists/listOwners";
 import ListPollster from "./src/screens/lists/listpollster";
 import LoginScreen from "./src/screens/login";
+import { IUser } from "./src/business/models/interfaces/IUser";
 
 export type ExploreStackParams = {
   screen1: undefined;
-  screen2: undefined;
+  userpage: { user: IUser };
   home: undefined;
   formAdmin: undefined;
   formUser: undefined;
@@ -45,7 +46,7 @@ function MyStackCustom() {
           }}
         />
         <RootStack.Screen name="screen1" component={screen1} />
-        <RootStack.Screen name="screen2" component={screen2} />
+        <RootStack.Screen name="userpage" component={userpage} />
         <RootStack.Screen name="listAdmin" component={ListAdmin} />
         <RootStack.Screen name="listOwner" component={ListOwner} />
         <RootStack.Screen name="listPollster" component={ListPollster} />

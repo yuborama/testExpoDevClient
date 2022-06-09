@@ -15,6 +15,8 @@ import MoleculeCardAnimal from "../components/molecules/MoleculeCardAnimal";
 import AtomImage from "../components/atoms/AtomImage";
 import MoleculeCardUserDetail from "../components/molecules/MoleculeCardUserDetail";
 import styled from "styled-components/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { ExploreStackParams } from "../../stack";
 
 const pets = [
   {
@@ -72,7 +74,8 @@ const pets = [
     ccOwner: "12.2123123.2131123",
     location: "Calle 13 Direccion 2123 #42345",
     url: "https://www.petmd.com/sites/default/files/styles/article_image/public/heat-stroke-dogs.jpg?itok=Coc987zl",
-  },{
+  },
+  {
     name: "Katti",
     race: "pitbull",
     owner: "Luis Arias",
@@ -101,14 +104,17 @@ const Save = styled.SafeAreaView`
 `;
 
 const UserPage: FC = () => {
+  const route = useRoute<RouteProp<ExploreStackParams, "userpage">>();
+  const { user } = route.params;
+  console.log("user", user);
   return (
     <AtomContainer>
       <Save>
         <MoleculeCardUserDetail
-          name="Juan Daniel Garcia Peña"
-          ccOwner="1090347567"
-          tel="3123078935"
-          email="Juandanielgarciapena@email.com"
+          name={user.name}
+          ccOwner={user.cc}
+          tel={user.tel}
+          email={user.email}
           location="Calle 1 #24-7 barrio cualquiera ciudad de por ahi"
           observation="En caso de que tenga alguna observarcion "
         />

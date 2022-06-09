@@ -17,7 +17,8 @@
     "react-native-get-random-values": "^1.7.2",
     "react-native-web": "0.17.1",
     "realm": "^10.13.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

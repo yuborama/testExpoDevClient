@@ -22,7 +22,7 @@ interface AtomInputType extends TextInputProps {
 }
 
 const AtomInput: FC<AtomInputType> = (props) => {
-  const { formik, value, id, label, keyboardType } = props;
+  const { formik, value, id, label } = props;
   return (
     <AtomWrapper
       customCSS={css`
@@ -37,7 +37,7 @@ const AtomInput: FC<AtomInputType> = (props) => {
         style={styles.input}
         value={lodash.get(formik?.values, id) ?? value}
         onChangeText={formik?.handleChange(id)}
-        keyboardType={keyboardType}
+        {...props}
       />
       <AtomTextError {...props} />
     </AtomWrapper>

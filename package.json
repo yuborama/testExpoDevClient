@@ -5,7 +5,7 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.6",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@realm/react": "^0.1.0",
     "expo": "^44.0.6",
     "expo-dev-client": "~0.8.4",
@@ -15,7 +15,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
-    "react-native-get-random-values": "^1.7.2",
+    "react-native-get-random-values": "~1.7.0",
     "react-native-web": "0.17.1",
     "realm": "^10.13.0",
     "uuid": "^8.3.2",

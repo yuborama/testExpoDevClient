@@ -13,6 +13,7 @@ import Detailpersonal from "./src/screens/details/personal";
 import ListAdmin from "./src/screens/lists/listAdmin";
 import ListOwner from "./src/screens/lists/listOwners";
 import ListPollster from "./src/screens/lists/listpollster";
+import LoginScreen from "./src/screens/login";
 
 export type ExploreStackParams = {
   screen1: undefined;
@@ -24,6 +25,7 @@ export type ExploreStackParams = {
   listAdmin: undefined;
   listOwner: undefined;
   listPollster: undefined;
+  login: undefined;
 };
 
 const RootStack = createStackNavigator<ExploreStackParams>();
@@ -33,7 +35,15 @@ export type navigationScreenProp = StackNavigationProp<ExploreStackParams>;
 function MyStackCustom() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="home">
+      <RootStack.Navigator initialRouteName="login">
+        <RootStack.Screen
+          name="login"
+          component={LoginScreen}
+          options={{
+            headerShown: false,
+            headerBackTitleVisible: false,
+          }}
+        />
         <RootStack.Screen name="screen1" component={screen1} />
         <RootStack.Screen name="screen2" component={screen2} />
         <RootStack.Screen name="listAdmin" component={ListAdmin} />

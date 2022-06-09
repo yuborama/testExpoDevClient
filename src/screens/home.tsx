@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { css } from "styled-components/native";
 import { ExploreStackParams, navigationScreenProp } from "../../stack";
 import AtomWrapper from "../components/atoms/AtomWrapper";
 import MoleculeCardTask from "../components/molecules/MoleculeCardTask";
 import MoleculeCardUserHome from "../components/molecules/moleculeCardUserHome";
+import USERSTATE from "../zustand/global/store";
 
 const tasks = [
   {
@@ -46,6 +46,7 @@ const container = css`
 
 export default function App() {
   const navigation = useNavigation<navigationScreenProp>();
+  const { count, user, dispatchUser, increment } = USERSTATE();
   return (
     <AtomWrapper
       customCSS={css`
@@ -58,6 +59,38 @@ export default function App() {
         name="maria de los angeles"
         rol="Administrador"
       />
+      <Text>{user.name} </Text>
+      <Text>{user.email} </Text>
+      <Text>{user.phone}</Text>
+      <Text>{user.id}</Text>
+      <Text>{user.profile_image_url}</Text>
+      <Text>COUNTER: {count}</Text>
+      <Button
+        title="Logín  "
+        onPress={() => {
+          dispatchUser({
+            type: "SETUSER",
+            payload: {
+              name: "WHIL",
+              email: "GARCÍA11",
+              id: "1",
+              profile_image_url: "https://img.com",
+              phone: "1321213",
+              is_admin: true,
+            },
+          });
+        }}
+      />
+      <Button
+        title="REMOVE LOGIN  "
+        onPress={() => {
+          dispatchUser({
+            type: "REMOVELOGIN",
+          });
+        }}
+      />
+      <Button title="INCREMENT COUNT" onPress={increment} />
+      <Text>W</Text>
       <AtomWrapper
         customCSS={css`
           flex-direction: row;

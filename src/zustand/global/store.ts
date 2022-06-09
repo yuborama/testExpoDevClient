@@ -1,27 +1,21 @@
+import { IUser } from "../../business/models/interfaces/IUser";
 import useWithStorage from "../../hooks/useWithStorage";
-
-type User = {
-  name: string;
-  id: string;
-  profile_image_url: string;
-  phone: string;
-  email: string;
-  is_admin: boolean;
-};
 
 export const initialState = {
   user: {
-    name: "",
-    id: "",
-    profile_image_url: "",
-    phone: "",
+    _id: "",
+    _partition: "",
+    cc: "",
     email: "",
-    is_admin: false,
+    name: "",
+    password: "",
+    role: "",
+    tel: "",
   },
 };
 
 type USERSTATE = {
-  user: User;
+  user: IUser;
   dispatchUser: (args: Action) => void;
   removeUser: () => void;
   count: number;
@@ -43,7 +37,7 @@ type Initial = ReturnType<() => typeof initialState>;
 
 type Action = {
   type: keyof typeof typeReducers;
-  payload?: User;
+  payload?: IUser;
 };
 
 const reducer = (state: Initial["user"], payload: Action) =>

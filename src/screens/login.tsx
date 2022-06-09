@@ -10,10 +10,11 @@ import { IUser } from "../business/models/interfaces/IUser";
 import AtomButton from "../components/atoms/AtomButton";
 import AtomInput from "../components/atoms/AtomInput";
 import AtomWrapper from "../components/atoms/AtomWrapper";
+import USERSTATE from "../zustand/global/store";
 const LoginScreen: FC = () => {
   const realm = useMainContext();
   const navigation = useNavigation<navigationScreenProp>();
-  console.log(`realm`, realm);
+  const { dispatchUser } = USERSTATE();
   const formik = useFormik({
     initialValues: {
       name: ``,
@@ -31,8 +32,6 @@ const LoginScreen: FC = () => {
       password: Yup.string().required(`Escribe tu contraseña`),
     }),
     onSubmit: ({ email, password }) => {
-      console.log("user", email);
-      console.log("password", password);
       if (realm) {
         const users = realm
           .objects<IUser>("User")
@@ -40,6 +39,13 @@ const LoginScreen: FC = () => {
         const userData = users.find((data) => data.email === email);
         console.log(`mi data`, userData);
         if (userData?.password === password) {
+          dispatchUser({
+            type: "SETUSER",
+            payload: userData,
+            //   name: userData.name,
+            //   cc: userData.cc,
+            //   email: userData.email,
+          });
           navigation.navigate("home");
         }
       } else {

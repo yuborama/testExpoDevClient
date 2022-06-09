@@ -9,6 +9,7 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.2",
     "@react-navigation/stack": "^6.2.1",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@realm/react": "^0.1.0",
     "@rneui/base": "^4.0.0-rc.4",
     "@rneui/themed": "^4.0.0-rc.4",
@@ -30,7 +31,8 @@
     "realm": "^10.13.0",
     "styled-components": "^5.3.5",
     "uuid": "^8.3.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

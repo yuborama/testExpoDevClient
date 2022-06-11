@@ -61,7 +61,7 @@ const ScreenFormAdmin: FC = () => {
             ...values,
             _id: uuid(),
             _partition: "testTask",
-            role: "admin",
+            role: "pollster",
           });
           console.log("addUser realm write", task);
         });
@@ -101,17 +101,24 @@ const ScreenFormAdmin: FC = () => {
           formik={formik}
         />
         <AtomInput id="email" label="Email" formik={formik} />
+        {/* <Pi */}
         <AtomInput
           id="tel"
           label="Numero de telefono"
           keyboardType="numeric"
           formik={formik}
         />
-        <AtomInput id="password" label="Contraseña" formik={formik} />
+        <AtomInput
+          id="password"
+          label="Contraseña"
+          formik={formik}
+          secureTextEntry
+        />
         <AtomInput
           id="passwordConfirm"
           label="Confirmar contraseña"
           formik={formik}
+          secureTextEntry
         />
         <ButtonAtom
           customCSS={css`

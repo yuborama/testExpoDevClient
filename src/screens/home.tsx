@@ -61,26 +61,30 @@ export default function App() {
       />
       <Text>{user.name} </Text>
       <Text>{user.email} </Text>
-      <Text>{user.phone}</Text>
-      <Text>{user.id}</Text>
-      <Text>{user.profile_image_url}</Text>
+      <Text>{user.tel}</Text>
+      <Text>{user._id}</Text>
+      <Text>{user.password}</Text>
       <Text>COUNTER: {count}</Text>
-      <Button
-        title="Logín  "
+      <Button title="Logín redirect" onPress={() => {
+        navigation.navigate("login");
+      }} />
+      {/* <Button
+        title="Logín "
         onPress={() => {
           dispatchUser({
             type: "SETUSER",
             payload: {
+              ...user,
               name: "WHIL",
               email: "GARCÍA11",
-              id: "1",
-              profile_image_url: "https://img.com",
-              phone: "1321213",
-              is_admin: true,
+              _id: "1",
+              password: "123",
+              tel: "123456789",
+              role: "admin",
             },
           });
         }}
-      />
+      /> */}
       <Button
         title="REMOVE LOGIN  "
         onPress={() => {

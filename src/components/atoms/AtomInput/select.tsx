@@ -59,7 +59,11 @@ const InputSelect: FC<AtomInputType> = (props) => {
                 >
                   <Text
                     style={{
-                      color: "white",
+                      color: `${
+                        colorScheme !== "dark"
+                          ? Colors.light.text
+                          : Colors.dark.text
+                      }`,
                       fontSize: 16,
                       fontWeight: "bold",
                       margin: 10,

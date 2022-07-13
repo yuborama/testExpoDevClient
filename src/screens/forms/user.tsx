@@ -7,6 +7,7 @@ import AtomWrapper from "../../components/atoms/AtomWrapper";
 import * as Yup from "yup";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
 import { AtomText } from "../../components/atoms/AtomText";
+import Colors from "../../constants/Colors";
 
 const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
   (props) => css`
@@ -23,6 +24,59 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
     ${props?.customCSS}
   `
 );
+type typeofIput =
+  | "text"
+  | "password"
+  | "email"
+  | "number"
+  | "phone"
+  | "checkbox"
+  | "select";
+const basicInput = [
+  {
+    id: "name",
+    label: "Nombre",
+    placeholder: "Nombre",
+  },
+  {
+    id: "ccowner",
+    label: "Numero de documento",
+    placeholder: "Numero de documento",
+  },
+  {
+    id: "email",
+    label: "Correo electronico",
+    placeholder: "Correo electronico",
+  },
+  {
+    id: "phone",
+    label: "Numero Telefono",
+    placeholder: "Ingrese su numero telefonico",
+  },
+  {
+    id: "gender",
+    label: "Sexo",
+    placeholder: "Seleccione un genero",
+    type: "select" as typeofIput,
+    options: [
+      {
+        id: 1,
+        label: "Masculino",
+        value: "masculine",
+      },
+      {
+        id: 2,
+        label: "Femenino",
+        value: "female",
+      },
+    ],
+  },
+  {
+    id: "observations",
+    label: "Observaciones",
+    placeholder: "Digite sus observaciones en casos de haberlas",
+  },
+];
 
 const ScreenFormUser: FC = () => {
   const formik = useFormik({
@@ -66,32 +120,35 @@ const ScreenFormUser: FC = () => {
     <AtomWrapper
       customCSS={css`
         flex: 1;
-        padding-top: 90px;
-        padding-bottom: 10px;
         align-items: center;
+        justify-content: center;
+        background-color: white;
       `}
     >
-      <Text>ScreenFormUser</Text>
       <ScrollView
         style={{
           width: "100%",
           paddingLeft: 30,
         }}
       >
-        <AtomInput id="name" label="Nombre" formik={formik} />
-        <AtomInput id="ccowner" label="Numero de documento" formik={formik} />
-        <AtomInput id="namePet" label="Correo electronico" formik={formik} />
-        <AtomInput id="typePet" label="Numero de telefono" formik={formik} />
-        <AtomInput id="race" label="Observaciones" formik={formik} />
-        <AtomText>Ubicacion</AtomText>
-        <AtomInput id="size" label="Direccíon" formik={formik} />
-        <AtomInput id="date" label="Zona" formik={formik} />
-        <AtomInput id="gender" label="Sexo" formik={formik} type="select" />
-        <AtomInput id="color" label="Color" formik={formik} />
-        <AtomInput id="observations" label="Observaciones" formik={formik} />
-        <AtomInput id="diseases" label="Enfermedades" formik={formik} />
-        <AtomInput id="direction" label="Direccion" formik={formik} />
-        <AtomInput id="location" label="Zona" formik={formik} />
+        {basicInput.map((item) => (
+          <AtomInput
+            wrapperWidth="85%"
+            key={item.id}
+            formik={formik}
+            {...item}
+          />
+        ))}
+        <AtomText color={Colors.light.primary} fontSize="20" fontWeight="bold">
+          Ubicacion
+        </AtomText>
+        <AtomInput
+          id="size"
+          label="Direccíon"
+          formik={formik}
+          wrapperWidth="85%"
+        />
+        <AtomInput id="date" label="Zona" formik={formik} wrapperWidth="85%" />
         <ButtonAtom
           customCSS={css`
             width: 80%;

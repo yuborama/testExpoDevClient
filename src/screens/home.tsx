@@ -34,16 +34,6 @@ const tasks = [
   },
 ];
 
-const container = css`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  flex-wrap: wrap;
-  padding: 30px;
-`;
-
 export default function App() {
   const navigation = useNavigation<navigationScreenProp>();
   const { count, user, dispatchUser, increment } = USERSTATE();
@@ -56,7 +46,7 @@ export default function App() {
     >
       <MoleculeCardUserHome
         gender="female"
-        name="maria de los angeles"
+        name={user.name}
         rol="Administrador"
       />
       <Text>{user.name} </Text>
@@ -65,26 +55,12 @@ export default function App() {
       <Text>{user._id}</Text>
       <Text>{user.password}</Text>
       <Text>COUNTER: {count}</Text>
-      <Button title="Logín redirect" onPress={() => {
-        navigation.navigate("login");
-      }} />
-      {/* <Button
-        title="Logín "
+      <Button
+        title="Logín redirect"
         onPress={() => {
-          dispatchUser({
-            type: "SETUSER",
-            payload: {
-              ...user,
-              name: "WHIL",
-              email: "GARCÍA11",
-              _id: "1",
-              password: "123",
-              tel: "123456789",
-              role: "admin",
-            },
-          });
+          navigation.navigate("login");
         }}
-      /> */}
+      />
       <Button
         title="REMOVE LOGIN  "
         onPress={() => {

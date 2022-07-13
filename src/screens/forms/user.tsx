@@ -6,6 +6,7 @@ import AtomInput from "../../components/atoms/AtomInput";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import * as Yup from "yup";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
+import { AtomText } from "../../components/atoms/AtomText";
 
 const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
   (props) => css`
@@ -77,14 +78,15 @@ const ScreenFormUser: FC = () => {
           paddingLeft: 30,
         }}
       >
-        <AtomInput id="name" label="Nombre del dueño" formik={formik} />
-        <AtomInput id="ccowner" label="Cedula del dueño" formik={formik} />
-        <AtomInput id="namePet" label="nombre de la mascota" formik={formik} />
-        <AtomInput id="typePet" label="Tipo de animal" formik={formik} />
-        <AtomInput id="race" label="Raza" formik={formik} />
-        <AtomInput id="size" label="Tamaño" formik={formik} />
-        <AtomInput id="date" label="Fecha de nacimiento" formik={formik} />
-        <AtomInput id="gender" label="Sexo" formik={formik} />
+        <AtomInput id="name" label="Nombre" formik={formik} />
+        <AtomInput id="ccowner" label="Numero de documento" formik={formik} />
+        <AtomInput id="namePet" label="Correo electronico" formik={formik} />
+        <AtomInput id="typePet" label="Numero de telefono" formik={formik} />
+        <AtomInput id="race" label="Observaciones" formik={formik} />
+        <AtomText>Ubicacion</AtomText>
+        <AtomInput id="size" label="Direccíon" formik={formik} />
+        <AtomInput id="date" label="Zona" formik={formik} />
+        <AtomInput id="gender" label="Sexo" formik={formik} type="select" />
         <AtomInput id="color" label="Color" formik={formik} />
         <AtomInput id="observations" label="Observaciones" formik={formik} />
         <AtomInput id="diseases" label="Enfermedades" formik={formik} />

@@ -1,13 +1,13 @@
-import React, { FC, useState } from 'react';
-import { FlatList, Modal, Text, useColorScheme } from 'react-native';
-import { css } from 'styled-components/native';
-import Colors from '../../../constants/Colors';
-import { AtomButton } from '../AtomButton';
-import AtomIcon from '../AtomIcon';
-import AtomModal from '../AtomModal';
-import AtomWrapper from '../AtomWrapper';
-import Input from './inputText';
-import AtomInputType from './type';
+import React, { FC, useState } from "react";
+import { FlatList, Modal, Text, useColorScheme } from "react-native";
+import { css } from "styled-components/native";
+import Colors from "../../../constants/Colors";
+import AtomButton from "../AtomButton";
+import AtomIcon from "../AtomIcon";
+import AtomModal from "../AtomModal";
+import AtomWrapper from "../AtomWrapper";
+import Input from "./inputText";
+import AtomInputType from "./type";
 
 const InputSelect: FC<AtomInputType> = (props) => {
   const { options } = props;
@@ -23,7 +23,7 @@ const InputSelect: FC<AtomInputType> = (props) => {
             alignItems="center"
             style={[
               {
-                maxHeight: '50%',
+                maxHeight: "50%",
               },
             ]}
           >
@@ -32,12 +32,14 @@ const InputSelect: FC<AtomInputType> = (props) => {
               width="auto"
               backgroundColor="transparent"
               style={{
-                alignSelf: 'flex-end',
+                alignSelf: "flex-end",
               }}
             >
               <AtomIcon
                 uri="https://storage.googleapis.com/cdn-bucket-ixulabs-platform/IXU-0001/califarma/icons/close.svg"
-                color={`${colorScheme !== 'dark' ? Colors.light.text : Colors.dark.text}`}
+                color={`${
+                  colorScheme !== "dark" ? Colors.light.text : Colors.dark.text
+                }`}
               />
             </AtomButton>
             <FlatList
@@ -57,9 +59,9 @@ const InputSelect: FC<AtomInputType> = (props) => {
                 >
                   <Text
                     style={{
-                      color: 'white',
+                      color: "white",
                       fontSize: 16,
-                      fontWeight: 'bold',
+                      fontWeight: "bold",
                       margin: 10,
                     }}
                   >
@@ -67,7 +69,7 @@ const InputSelect: FC<AtomInputType> = (props) => {
                   </Text>
                 </AtomButton>
               )}
-            /> 
+            />
           </AtomWrapper>
         }
       />

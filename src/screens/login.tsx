@@ -18,8 +18,8 @@ const LoginScreen: FC = () => {
   const { dispatchUser } = USERSTATE();
   const formik = useFormik({
     initialValues: {
-      email: ``,
-      password: ``,
+      email: `davidjohan2+admin@hotmail.com`,
+      password: `johan123`,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -64,12 +64,13 @@ const LoginScreen: FC = () => {
       `}
     >
       <Image style={styles.image} source={require("../../assets/escudo.png")} />
-      <AtomInput id="email" label="Email" formik={formik} />
+      <AtomInput id="email" label="Email" formik={formik} wrapperWidth="80%" />
       <AtomInput
         id="password"
         label="Contraseña"
         formik={formik}
-        secureTextEntry
+        wrapperWidth="80%"
+        type="password"
       />
 
       <AtomButton

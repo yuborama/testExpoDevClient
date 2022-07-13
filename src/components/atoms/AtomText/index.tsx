@@ -1,10 +1,11 @@
-import React, { FC } from "react";
-import { TextSyle } from "./style";
+import styled, { css } from 'styled-components/native';
+import { AtomTextProps } from './types';
 
-interface AtomTextType {}
-
-const AtomText: FC<AtomTextType> = (props) => {
-  const { children } = props;
-  return <TextSyle {...props}>{children}</TextSyle>;
-};
-export default AtomText;
+export const AtomText = styled.Text<AtomTextProps>(
+  (props) => css`
+    font-size: ${props?.fontSize ?? '16px'};
+    font-weight: ${props?.fontWeight ?? 'normal'};
+    color: ${props?.color ?? '#111111'};
+    margin: ${props?.margin ?? '0'};
+  `
+);

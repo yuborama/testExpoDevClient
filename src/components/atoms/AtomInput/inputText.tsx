@@ -1,26 +1,26 @@
+import lodash from "lodash";
 import { FC } from "react";
 import {
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   useColorScheme,
-  View,
 } from "react-native";
 import Colors from "../../../constants/Colors";
 import AtomIcon from "../AtomIcon";
+import AtomText from "../AtomText";
 import AtomWrapper from "../AtomWrapper";
 import AtomTextError from "./textError";
-import lodash from "lodash";
 import AtomInputType from "./type";
 
-const Input: FC<AtomInputType> = (props) => {
+const InputText: FC<AtomInputType> = (props) => {
   const {
     formik,
     value,
     id,
     label,
     wrapperWidth,
+    placeholder,
     onPressIcon,
     iconUri,
     inputIconWidth,
@@ -29,7 +29,6 @@ const Input: FC<AtomInputType> = (props) => {
     labelFontSize: fontSize,
   } = props;
   const colorScheme = useColorScheme();
-
   return (
     <AtomWrapper
       width={wrapperWidth ?? "100%"}
@@ -39,21 +38,27 @@ const Input: FC<AtomInputType> = (props) => {
     >
       <>
         {label && (
-          <Text
+          <AtomText
             style={{
               fontSize: fontSize as number,
               fontWeight: "bold",
-              color: `${Colors.light.primary}`,
+              color: `${
+                colorScheme === "dark" ? "#ffffff" : Colors.light.primary
+              }`,
             }}
           >
             {label}
-          </Text>
+          </AtomText>
         )}
-        <View
+        <AtomWrapper
           style={[
-            styles?.inputContainer,
+            styles.inputContainer,
             {
-              backgroundColor: "#F4F4F4",
+              backgroundColor: `${
+                colorScheme === "dark"
+                  ? Colors?.dark?.inputBacckground
+                  : Colors?.light?.inputBacckground
+              }`,
             },
           ]}
         >
@@ -66,10 +71,11 @@ const Input: FC<AtomInputType> = (props) => {
                   colorScheme !== "dark"
                     ? Colors.light?.inputColor
                     : Colors.dark?.inputColor,
-                backgroundColor: "#F4F4F4",
+                //backgroundColor: '#ffffff',
               },
             ]}
-            value={lodash.get(formik?.values, id) ?? value}
+            placeholder={placeholder}
+            value={value ?? lodash.get(formik?.values, id)}
             onChangeText={formik?.handleChange(id)}
             placeholderTextColor="#BCBCBC"
             {...props}
@@ -84,8 +90,8 @@ const Input: FC<AtomInputType> = (props) => {
                   inputIconcolor ||
                   `${
                     colorScheme === "dark"
-                      ? Colors?.light?.primary
-                      : Colors?.dark?.primary
+                      ? Colors?.dark?.primary
+                      : Colors?.light?.primary
                   }`
                 }
                 uri={iconUri}
@@ -94,7 +100,7 @@ const Input: FC<AtomInputType> = (props) => {
               />
             </TouchableOpacity>
           )}
-        </View>
+        </AtomWrapper>
         <AtomTextError {...props} />
       </>
     </AtomWrapper>
@@ -105,7 +111,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 5,
     borderWidth: 0.5,
-    borderColor: "#ececec",
+    borderColor: "#a0a0a0",
+    // backgroundColor: "#66c7d4",
     height: 40,
     borderRadius: 5,
     paddingLeft: 10,
@@ -125,7 +132,8 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
+    // color: "#ffffff",
   },
 });
 
-export default Input;
+export default InputText;

@@ -1,4 +1,5 @@
-import Input from './inputText';
+import Input from './InputText';
+import InputPassword from './password';
 import InputSelect from './select';
 import AtomInputType from './type';
 
@@ -10,7 +11,7 @@ export const AtomInput = (props: AtomInputType) => {
     case 'email':
       return <Input keyboardType="email-address" {...props} />;
     case 'password':
-      return <Input secureTextEntry={true} {...props} />;
+      return <InputPassword {...props} />;
     case 'checkbox':
       return <Input {...props} />;
     case 'select':

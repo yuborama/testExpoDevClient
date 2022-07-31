@@ -11,6 +11,7 @@ const UserSchema: ObjectSchema = {
     tel: "string",
     password: "string",
     role: "string",
+    sex: "string",
   },
   primaryKey: "_id",
 };

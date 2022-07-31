@@ -9,6 +9,7 @@ export type IUser = {
   password: string;
   role: string;
   tel: string;
+  sex: string;
 };
 
 

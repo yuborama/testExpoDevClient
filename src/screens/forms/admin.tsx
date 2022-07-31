@@ -1,6 +1,15 @@
 import { useFormik } from "formik";
 import React, { FC } from "react";
-import { ScrollView, Text } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import styled, { css } from "styled-components/native";
 import AtomInput from "../../components/atoms/AtomInput";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
@@ -37,6 +46,7 @@ const ScreenFormAdmin: FC = () => {
       tel: ``,
       password: ``,
       passwordConfirm: ``,
+      sex: ``,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -50,6 +60,7 @@ const ScreenFormAdmin: FC = () => {
       passwordConfirm: Yup.string()
         .required(`Escribe tu contraseña`)
         .equals([Yup.ref("password"), null], "Las contraseñas no coinciden"),
+      sex: Yup.string().required("Seleccione un sexo"),
     }),
     onSubmit: (values) => {
       console.log(`values`, values);
@@ -78,74 +89,104 @@ const ScreenFormAdmin: FC = () => {
     },
   });
   return (
-    <AtomWrapper
-      customCSS={css`
-        flex: 1;
-        padding-top: 90px;
-        padding-bottom: 10px;
-        align-items: center;
-      `}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
     >
-      <Text>ScreenFormUser</Text>
       <ScrollView
         style={{
           width: "100%",
-          paddingLeft: 30,
         }}
       >
-        <AtomInput id="name" label="Nombre" formik={formik} />
-        <AtomInput
-          id="cc"
-          label="Numero del documento"
-          keyboardType="numeric"
-          formik={formik}
-        />
-        <AtomInput id="email" label="Email" formik={formik} />
-        {/* <Pi */}
-        <AtomInput
-          id="tel"
-          label="Numero de telefono"
-          keyboardType="numeric"
-          formik={formik}
-        />
-        <AtomInput
-          id="password"
-          label="Contraseña"
-          formik={formik}
-          secureTextEntry
-        />
-        <AtomInput
-          id="passwordConfirm"
-          label="Confirmar contraseña"
-          formik={formik}
-          secureTextEntry
-        />
-        <ButtonAtom
-          customCSS={css`
-            width: 80%;
-            background-color: #3a85f8;
-            height: 40px;
-            border-radius: 15px;
-            justify-content: center;
-            align-items: center;
-          `}
-          onPress={() => {
-            console.log(formik.values);
-            formik.handleSubmit();
-          }}
-        >
-          <Text
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View
             style={{
-              color: "white",
-              fontSize: 16,
-              fontWeight: "700",
+              padding: 20,
+              alignItems: "center",
+              paddingBottom: 60,
             }}
           >
-            Enviar
-          </Text>
-        </ButtonAtom>
+            <AtomInput
+              id="cc"
+              label="Numero del documento"
+              keyboardType="numeric"
+              formik={formik}
+            />
+            <AtomInput id="name" label="Nombre" formik={formik} />
+            <AtomInput id="email" label="Email" formik={formik} />
+            {/* <Pi */}
+            <AtomInput
+              id="tel"
+              label="Numero de telefono"
+              keyboardType="numeric"
+              formik={formik}
+            />
+            <AtomInput
+              id="password"
+              label="Contraseña"
+              type="password"
+              formik={formik}
+            />
+            <AtomInput
+              id="passwordConfirm"
+              type="password"
+              label="Confirmar contraseña"
+              formik={formik}
+            />
+            <AtomInput
+              id="sex"
+              label="Sexo"
+              type="select"
+              formik={formik}
+              options={[
+                {
+                  id: "1",
+                  label: "Mujer",
+                  value: "female",
+                },
+                {
+                  id: "2",
+                  label: "Hombre",
+                  value: "male",
+                },
+              ]}
+            />
+            <ButtonAtom
+              customCSS={css`
+                width: 80%;
+                background-color: #3a85f8;
+                height: 40px;
+                border-radius: 15px;
+                justify-content: center;
+                align-items: center;
+              `}
+              onPress={() => {
+                console.log(formik.values);
+                formik.handleSubmit();
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  fontSize: 16,
+                  fontWeight: "700",
+                }}
+              >
+                Enviar
+              </Text>
+            </ButtonAtom>
+          </View>
+        </TouchableWithoutFeedback>
       </ScrollView>
-    </AtomWrapper>
+    </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 export default ScreenFormAdmin;

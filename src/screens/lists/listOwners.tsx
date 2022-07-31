@@ -4,9 +4,9 @@ import styled, { css } from "styled-components/native";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
 import { Icon } from "@rneui/themed";
-import MoleculeCardAnimal from "../../components/molecules/MoleculeCardUser";
 import { useNavigation } from "@react-navigation/native";
 import { navigationScreenProp } from "../../../stack";
+import MoleculeCardUser from "../../components/molecules/MoleculeCardUser";
 
 const dataUser = [
   {
@@ -105,13 +105,13 @@ const ListOwner: FC = () => {
               fontWeight: "bold",
             }}
           >
-            Lista de Administradores
+            Lista de Dueños
           </Text>
           <Icon name="search" color="#4684BE" size={35} />
         </AtomWrapper>
         <ScrollView>
           {dataUser.map((item) => (
-            <MoleculeCardAnimal key={item.document} {...item} />
+            <MoleculeCardUser key={item.document} {...item} />
           ))}
         </ScrollView>
 

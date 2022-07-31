@@ -26,6 +26,7 @@ const InputText: FC<AtomInputType> = (props) => {
     inputIconWidth,
     inputIconHeigth,
     inputIconcolor,
+    backgroundColor,
     labelFontSize: fontSize,
   } = props;
   const colorScheme = useColorScheme();
@@ -63,17 +64,7 @@ const InputText: FC<AtomInputType> = (props) => {
           ]}
         >
           <TextInput
-            style={[
-              styles.input,
-              { width: iconUri ? "85%" : "100%" },
-              {
-                color:
-                  colorScheme !== "dark"
-                    ? Colors.light?.inputColor
-                    : Colors.dark?.inputColor,
-                //backgroundColor: '#ffffff',
-              },
-            ]}
+            style={[styles.input, { width: iconUri ? "85%" : "100%" }]}
             placeholder={placeholder}
             value={value ?? lodash.get(formik?.values, id)}
             onChangeText={formik?.handleChange(id)}

@@ -1,5 +1,4 @@
-import { CWT } from "@types";
-import { ViewProps } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 import { FlattenSimpleInterpolation } from "styled-components";
 
 export type AtomWrapperTypes = {
@@ -8,7 +7,7 @@ export type AtomWrapperTypes = {
   borderRadius?: string;
   border?: string;
   width?: string;
-  padding?: string;
+  padding?: number | string;
   margin?: string;
   height?: string;
   alignItems?: "center" | "flex-start" | "flex-end";
@@ -20,6 +19,13 @@ export type AtomWrapperTypes = {
     | "space-around"
     | "space-evenly";
   customCSS?: FlattenSimpleInterpolation;
+  borderBottomColor?: string;
+  borderBottomWidth?: string;
+  marginTop?: string;
+  flexDirection?: "row" | "column";
+  marginHorizontal?: string;
+  marginVertical?: string;
+  style?: StyleProp<ViewStyle> | undefined;
 };
 
-export type AtomWrapperProps = CWT<ViewProps, AtomWrapperTypes>;
+export type AtomWrapperProps = AtomWrapperTypes;

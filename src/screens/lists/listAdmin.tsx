@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import styled, { css } from "styled-components/native";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
@@ -7,6 +7,11 @@ import { Icon } from "@rneui/themed";
 import MoleculeCardAnimal from "../../components/molecules/MoleculeCardUser";
 import { navigationScreenProp } from "../../../stack";
 import { useNavigation } from "@react-navigation/native";
+import {
+  useGetAllUsers,
+  useGetFilterUsers,
+} from "../../business/services/User";
+import { IUser } from "../../business/models/interfaces/IUser";
 
 const dataUser = [
   {
@@ -73,12 +78,15 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 
 const ListAdmin: FC = () => {
   const navigation = useNavigation<navigationScreenProp>();
+  const { data, loading } = useGetFilterUsers({
+    variables: "role = 'admin'",
+  });
+
   return (
     <>
       <View
         style={{
           flex: 1,
-
         }}
       >
         <Save>
@@ -112,8 +120,14 @@ const ListAdmin: FC = () => {
             <Icon name="search" color="#4684BE" size={35} />
           </AtomWrapper>
           <ScrollView>
-            {dataUser.map((item) => (
-              <MoleculeCardAnimal key={item.document} {...item} />
+            {data.map((item) => (
+              <MoleculeCardAnimal
+                key={item._id}
+                document={item.cc}
+                name={item.name}
+                tel={item.tel}
+                // location={item ?? ""}
+              />
             ))}
           </ScrollView>
         </Save>

@@ -15,7 +15,7 @@ import AtomInput from "../../components/atoms/AtomInput";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import * as Yup from "yup";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
-import { writeNewUser } from "../../business/services/User";
+import { useCreateUser, writeNewUser } from "../../business/services/User";
 import { v4 as uuid } from "uuid";
 import { useMainContext } from "../../business/context/RealmContext";
 import { IUser } from "../../business/models/interfaces/IUser";
@@ -37,7 +37,7 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 );
 
 const ScreenFormAdmin: FC = () => {
-  const realm = useMainContext();
+  const [createUser, { data, loading }] = useCreateUser();
   const formik = useFormik({
     initialValues: {
       name: ``,
@@ -63,29 +63,12 @@ const ScreenFormAdmin: FC = () => {
       sex: Yup.string().required("Seleccione un sexo"),
     }),
     onSubmit: (values) => {
-      console.log(`values`, values);
-      console.log(`realm`, realm);
-      if (realm) {
-        console.log(`realm`, realm);
-        realm.write(() => {
-          const task = realm.create<IUser>("User", {
-            ...values,
-            _id: uuid(),
-            _partition: "testTask",
-            role: "pollster",
-          });
-          console.log("addUser realm write", task);
-        });
-      }
-
-      // writeNewUser({})
-      //   .then(() => {
-      //     console.log(`User created`);
-      //   })
-      //   .catch((err) => {
-      //     console.log(`Error creating user`, err);
-      //   });
-      //   formik.resetForm();
+      createUser({
+        ...values,
+        _id: uuid(),
+        _partition: "testTask",
+        role: "pollster",
+      });
     },
   });
   return (

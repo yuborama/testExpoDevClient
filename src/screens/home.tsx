@@ -49,7 +49,7 @@ export default function App() {
         name={user.name}
         rol="Administrador"
       />
-      <Text>{user.name} </Text>
+      {/* <Text>{user.name} </Text>
       <Text>{user.email} </Text>
       <Text>{user.tel}</Text>
       <Text>{user._id}</Text>
@@ -70,7 +70,7 @@ export default function App() {
         }}
       />
       <Button title="INCREMENT COUNT" onPress={increment} />
-      <Text>W</Text>
+      <Text>W</Text> */}
       <AtomWrapper
         customCSS={css`
           flex-direction: row;

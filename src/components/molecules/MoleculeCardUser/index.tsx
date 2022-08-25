@@ -2,18 +2,21 @@ import { Icon } from "@rneui/themed";
 import React, { FC } from "react";
 import { StyleSheet, Text } from "react-native";
 import { css } from "styled-components/native";
+import Colors from "../../../constants/Colors";
+import AtomIcon from "../../atoms/AtomIcon";
 import { ImageStyle } from "../../atoms/AtomImage/style";
+import { AtomText } from "../../atoms/AtomText";
 import { TextSyle } from "../../atoms/AtomText/style";
 import AtomWrapper from "../../atoms/AtomWrapper";
 
-interface MoleculeCardAnimalType {
+interface MoleculeCardUserType {
   name?: string;
   document?: string;
   tel?: string;
   location?: string;
 }
 
-const MoleculeCardAnimal: FC<MoleculeCardAnimalType> = (props) => {
+const MoleculeCardUser: FC<MoleculeCardUserType> = (props) => {
   const { document, tel, location, name } = props;
   return (
     <AtomWrapper
@@ -29,12 +32,29 @@ const MoleculeCardAnimal: FC<MoleculeCardAnimalType> = (props) => {
       `}
     >
       <AtomWrapper width="95%">
-        <AtomWrapper backgroundColor="#ef586b" height="30px" width="30px"/>
+        <AtomText color={Colors.light.secondary}>{name}</AtomText>
+        <AtomText color={Colors.light.tertiary}>C.C. {document}</AtomText>
+        <AtomText color={Colors.light.tertiary}>Telefono: {tel}</AtomText>
+
+        <AtomWrapper flexDirection="row">
+          <AtomIcon
+            uri="https://storage.googleapis.com/cdn-bucket-ixulabs-platform/IXU-0001/Cheisi/Icons/location.svg"
+            color="#167BD8"
+            height="15px"
+            width="15px"
+            style={{
+              paddingTop: 5,
+            }}
+          />
+          <AtomText style={{
+            paddingLeft: 5,
+          }}>{location}</AtomText>
+        </AtomWrapper>
       </AtomWrapper>
     </AtomWrapper>
   );
 };
-export default MoleculeCardAnimal;
+export default MoleculeCardUser;
 
 const Styles = StyleSheet.create({
   container: {},

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import styled, { css } from "styled-components/native";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
@@ -7,11 +7,8 @@ import { Icon } from "@rneui/themed";
 import MoleculeCardAnimal from "../../components/molecules/MoleculeCardUser";
 import { navigationScreenProp } from "../../../stack";
 import { useNavigation } from "@react-navigation/native";
-import {
-  useGetAllUsers,
-  useGetFilterUsers,
-} from "../../business/services/User";
-import { IUser } from "../../business/models/interfaces/IUser";
+import { useQueryRealm } from "../../hooks/useQueryRealm";
+import { GET_ALL_USERS } from "../../Realm/querys/user";
 
 const dataUser = [
   {
@@ -78,10 +75,15 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 
 const ListAdmin: FC = () => {
   const navigation = useNavigation<navigationScreenProp>();
-  const { data, loading } = useGetFilterUsers({
-    variables: "role = 'admin'",
+  const { loading: loadLazy, data } = useQueryRealm(GET_ALL_USERS, {
+    filter: [
+      {
+        key: "role",
+        operator: "=",
+        value: "admin",
+      },
+    ],
   });
-
   return (
     <>
       <View
@@ -120,7 +122,7 @@ const ListAdmin: FC = () => {
             <Icon name="search" color="#4684BE" size={35} />
           </AtomWrapper>
           <ScrollView>
-            {data.map((item) => (
+            {data?.map((item) => (
               <MoleculeCardAnimal
                 key={item._id}
                 document={item.cc}

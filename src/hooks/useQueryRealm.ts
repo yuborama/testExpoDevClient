@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { useEffect, useState } from "react";
 import Realm from "realm";
-import { RealmAtom } from "../business/context/RealmContext";
+import { RealmAtom } from "../Realm";
 import { filterType } from "../types/realm";
 
 export type GQType<P> = (R: Realm) => Realm.Results<P>;

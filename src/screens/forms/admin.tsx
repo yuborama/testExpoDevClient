@@ -15,11 +15,9 @@ import AtomInput from "../../components/atoms/AtomInput";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import * as Yup from "yup";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
-import { useCreateUser, writeNewUser } from "../../business/services/User";
 import { v4 as uuid } from "uuid";
-import { useMainContext } from "../../business/context/RealmContext";
-import { IUser } from "../../business/models/interfaces/IUser";
-import { CREATE_USER, useMutationRealm } from "../../business/services/NewUser";
+import { CREATE_USER } from "../../Realm/mutations/user";
+import { useMutationRealm } from "../../hooks/useMutationRealm";
 
 const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
   (props) => css`

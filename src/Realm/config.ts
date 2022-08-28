@@ -1,4 +1,4 @@
-import Realm from "realm";
+import Realm, { ObjectSchema } from "realm";
 import TaskSchema from "../business/models/Task";
 import UserSchema from "./models/user";
 

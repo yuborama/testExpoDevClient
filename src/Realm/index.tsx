@@ -1,7 +1,7 @@
 import { atom, useSetAtom } from "jotai";
 import React, { FC, useEffect } from "react";
 import Realm from "realm";
-import getRealm from "../../infrastructure/realm";
+import getRealm from "./config";
 
 export const RealmAtom = atom(null as unknown as Realm);
 

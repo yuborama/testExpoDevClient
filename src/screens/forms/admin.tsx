@@ -19,6 +19,7 @@ import { useCreateUser, writeNewUser } from "../../business/services/User";
 import { v4 as uuid } from "uuid";
 import { useMainContext } from "../../business/context/RealmContext";
 import { IUser } from "../../business/models/interfaces/IUser";
+import { CREATE_USER, useMutationRealm } from "../../business/services/NewUser";
 
 const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
   (props) => css`
@@ -37,7 +38,14 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 );
 
 const ScreenFormAdmin: FC = () => {
-  const [createUser, { data, loading }] = useCreateUser();
+  const [createUser, { data, loading }] = useMutationRealm(CREATE_USER, {
+    onComplete: (data) => {
+      console.log(`data oncomplete`, data);
+    },
+  });
+  // const [createUser, { data, loading }] = useCreateUser();
+  console.log(`data`, data);
+  console.log(`loading`, loading);
   const formik = useFormik({
     initialValues: {
       name: ``,
@@ -68,6 +76,8 @@ const ScreenFormAdmin: FC = () => {
         _id: uuid(),
         _partition: "testTask",
         role: "pollster",
+      }).then((data) => {
+        console.log(`data then`, data);
       });
     },
   });

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import getRealm from "../../infrastructure/realm";
 import { IUser } from "../models/interfaces/IUser";
-import { useMainContext } from "../context/RealmContext";
+import { RealmAtom } from "../context/RealmContext";
+import { useAtomValue } from "jotai";
 
 export type requestType<D = undefined, F = string | undefined> = {
   onComplete?: (data: D) => void;
@@ -17,7 +18,7 @@ export const useCreateUser = (
   props = {} as requestType<IUser>
 ): mutationType<IUser, IUser> => {
   const { onComplete } = props;
-  const realm = useMainContext();
+  const realm = useAtomValue(RealmAtom);
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [loading, setloading] = useState(false);
   const eject = (variables: IUser) => {
@@ -91,4 +92,100 @@ export const useGetFilterUsers = (props = {} as requestType<IUser[]>) => {
     getAllUsers();
   }, []);
   return { data: users, loading };
+};
+
+type variablesLoginRequestType = {
+  email: string;
+  password: string;
+};
+
+export type requestTypeLogin<D = undefined, F = undefined> = {
+  onComplete?: (data: D) => void;
+  variables: F;
+};
+
+export const Login = async (
+  props = {} as requestTypeLogin<IUser, variablesLoginRequestType>
+) => {
+  const { onComplete, variables } = props;
+  const { email, password } = variables;
+  const [user, setUser] = useState<IUser>({} as IUser);
+  const [loading, setloading] = useState(false);
+  const [error, setError] = useState({ status: false, message: "" });
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const realm = await getRealm();
+      const users = realm.objects<IUser>("User").filtered(`email = "${email}"`);
+      const userData = users.find((data) => data.email === email);
+
+      const user = realm.objectForPrimaryKey<IUser>("User", variables);
+      const data = user?.toJSON() as IUser;
+      setloading(false);
+      onComplete?.(data);
+      setUser(data);
+    };
+    setloading(true);
+    getAllUsers();
+  }, []);
+  return { data: user, loading };
+};
+
+export type GLQType<P> = (R: Realm) => Realm.Results<P>;
+export type PLQType<P> = {
+  onComplete?: (data: P) => void;
+  filter?: {
+    key: string;
+    operator: "==" | "!=" | ">" | "<" | ">=" | "<=" | "CONTAINS" | "=";
+    value: string;
+  }[];
+  onError?: (error: Error) => void;
+};
+
+export type RMType<P> = [
+  eject: (variables: P) => Promise<P>,
+  data: {
+    data?: P;
+    loading?: boolean;
+  }
+];
+
+export const useLazyQueryRealm = <P>(
+  LazyQuery: GLQType<P>,
+  props = {} as PLQType<P>
+): RMType<P> => {
+  const { onComplete, filter, onError } = props;
+  const realm = useAtomValue(RealmAtom);
+  const [data, setData] = useState<P>();
+  const [loading, setLoading] = useState(false);
+  const eject = (variables: P) => {
+    const promise = new Promise<P>((resolve, reject) => {
+      setLoading(true);
+      const ejectLazyQuery = async () => {
+        const getQuery = LazyQuery(realm).filtered(
+          filter?.reduce(
+            (acc, curr, idx, arr) =>
+              `${acc}${curr.key} ${curr.operator} "${curr.value}"${
+                idx === arr.length - 1 ? "" : " && "
+              }`,
+            ""
+          ) ?? ""
+        );
+        if (!getQuery) throw new Error("No query found");
+        const data = getQuery.toJSON() as unknown as P;
+        setLoading(false);
+        onComplete?.(data);
+        setData(data);
+      };
+      try {
+        if (realm) {
+          ejectLazyQuery();
+        }
+      } catch (error) {
+        onError?.(error as Error);
+        reject(error);
+      }
+    });
+    return promise;
+  };
+  return [eject, { data, loading }];
 };

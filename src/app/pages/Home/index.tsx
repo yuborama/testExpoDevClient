@@ -14,11 +14,12 @@ import Realm from "realm";
 
 import { ITask } from "../../../business/models/interfaces/ITask";
 import getAllTasks from "../../../business/services/getAllTasks";
-import { useMainContext } from "../../../business/context/RealmContext";
+import { RealmAtom } from "../../../business/context/RealmContext";
+import { useAtomValue } from "jotai";
 
 const Home = () => {
-  const realm = useMainContext();
-console.log(`realm`, realm);
+  const realm = useAtomValue(RealmAtom);
+  console.log(`realm`, realm);
   const [taskName, setTaskName] = useState("");
 
   const [data, setData] = useState<

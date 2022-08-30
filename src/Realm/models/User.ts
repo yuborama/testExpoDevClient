@@ -17,13 +17,13 @@ const UserSchema: ObjectSchema = {
   properties: {
     _id: "string",
     _partition: "string",
-    name: "string",
     cc: "string",
     email: "string",
-    tel: "string",
+    name: "string",
     password: "string",
     role: "string",
     sex: "string",
+    tel: "string",
   },
   primaryKey: "_id",
 };

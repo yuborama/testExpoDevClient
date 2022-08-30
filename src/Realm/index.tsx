@@ -11,7 +11,8 @@ const RealmContext: FC = ({ children }) => {
   useEffect(() => {
     const setRealmAsync = async () => {
       console.log("setRealmAsync");
-      setRealm(await getRealm());
+      const mirealm = await getRealm();
+      setRealm(mirealm);
     };
     setRealmAsync();
   }, []);

@@ -34,15 +34,18 @@ export const useLazyQueryRealm = <P>(
     const promise = new Promise<P>((resolve, reject) => {
       setLoading(true);
       const ejectLazyQuery = async () => {
-        const getQuery = LazyQuery(realm).filtered(
-          [...(filter ?? []), ...(filterEject ?? [])]?.reduce(
-            (acc, curr, idx, arr) =>
-              `${acc}${curr.key} ${curr.operator} "${curr.value}"${
-                idx === arr.length - 1 ? "" : " && "
-              }`,
-            ""
-          ) ?? ""
-        );
+        const getQuery =
+          [...(filter ?? []), ...(filterEject ?? [])].length > 0
+            ? LazyQuery(realm).filtered(
+                [...(filter ?? []), ...(filterEject ?? [])]?.reduce(
+                  (acc, curr, idx, arr) =>
+                    `${acc}${curr.key} ${curr.operator} "${curr.value}"${
+                      idx === arr.length - 1 ? "" : " && "
+                    }`,
+                  ""
+                )
+              )
+            : LazyQuery(realm);
         if (!getQuery) throw new Error("No query found");
         const data = getQuery.toJSON() as unknown as P;
         resolve(data);

@@ -1,9 +1,9 @@
-import Realm, { ObjectSchema } from "realm";
+import Realm from "realm";
 import TaskSchema from "../business/models/Task";
 import UserSchema from "./models/user";
 
 const getRealm = async () => {
-  const app = new Realm.App({ id: "task-amxgo" });
+  const app = new Realm.App({ id: "newconnection-lwxfz" });
   const credentials = Realm.Credentials.anonymous();
   const User = await app.logIn(credentials);
   const realm = await Realm.open({

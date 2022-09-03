@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import styled, { css } from "styled-components/native";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
@@ -7,6 +7,8 @@ import { Icon } from "@rneui/themed";
 import MoleculeCardAnimal from "../../components/molecules/MoleculeCardUser";
 import { navigationScreenProp } from "../../../stack";
 import { useNavigation } from "@react-navigation/native";
+import { GET_ALL_USERS } from "../../Realm/querys/user";
+import { useQueryRealm } from "../../hooks/useQueryRealm";
 
 const dataUser = [
   {
@@ -73,6 +75,15 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 
 const ListPollster: FC = () => {
   const navigation = useNavigation<navigationScreenProp>();
+  const { loading: loadLazy, data } = useQueryRealm(GET_ALL_USERS, {
+    filter: [
+      {
+        key: "role",
+        operator: "=",
+        value: "pollster",
+      },
+    ],
+  });
   return (
     <View
       style={{
@@ -109,11 +120,26 @@ const ListPollster: FC = () => {
           </Text>
           <Icon name="search" color="#4684BE" size={35} />
         </AtomWrapper>
-        <ScrollView>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <MoleculeCardAnimal
+              {...item}
+              document={item.cc}
+              name={item.name}
+              tel={item.tel}
+            />
+          )}
+          // {data?.map((item) => (
+          //   <MoleculeCardUser key={item.cc} {...item} />
+          // ))}
+        />
+        {/* <ScrollView>
           {dataUser.map((item) => (
             <MoleculeCardAnimal key={item.document} {...item} />
           ))}
-        </ScrollView>
+        </ScrollView> */}
 
         <Icon
           type="material-community"

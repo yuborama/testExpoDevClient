@@ -7,8 +7,11 @@ import * as Yup from "yup";
 import { navigationScreenProp } from "../../stack";
 import AtomButton from "../components/atoms/AtomButton";
 import AtomInput from "../components/atoms/AtomInput";
+import AtomLoadingScreen from "../components/atoms/AtomLoadingScreen";
 import AtomWrapper from "../components/atoms/AtomWrapper";
 import { useLazyQueryRealm } from "../hooks/useLazyQueryRealm";
+import { useQueryRealm } from "../hooks/useQueryRealm";
+import getRealm from "../Realm/config";
 import { GET_ALL_USERS } from "../Realm/querys/user";
 import USERSTATE from "../zustand/global/store";
 
@@ -38,6 +41,11 @@ const LoginScreen: FC = () => {
   // });
 
   const [login, { loading: loadLazy }] = useLazyQueryRealm(GET_ALL_USERS);
+  const { data } = useQueryRealm(GET_ALL_USERS, {
+    onComplete: (data) => {
+      console.log("data", data);
+    },
+  });
   const formik = useFormik({
     initialValues: {
       email: `davidjohan2+admin@hotmail.com`,
@@ -59,7 +67,7 @@ const LoginScreen: FC = () => {
             value: email,
           },
         ],
-        onComplete: (data) => {          
+        onComplete: (data) => {
           const userData = data.find((item) => item.email === email);
           if (!userData) return AlertError("Usuario no encontrado");
           if (userData.password !== password)
@@ -76,46 +84,57 @@ const LoginScreen: FC = () => {
     },
   });
   return (
-    <AtomWrapper
-      justifyContent="center"
-      alignItems="center"
-      customCSS={css`
-        flex: 1;
-      `}
-    >
-      <Image style={styles.image} source={require("../../assets/escudo.png")} />
-      <AtomInput id="email" label="Email" formik={formik} wrapperWidth="80%" />
-      <AtomInput
-        id="password"
-        label="Contraseña"
-        formik={formik}
-        wrapperWidth="80%"
-        type="password"
-      />
-
-      <AtomButton
+    <AtomLoadingScreen loading={loadLazy}>
+      <AtomWrapper
+        justifyContent="center"
+        alignItems="center"
         customCSS={css`
-          width: 80%;
-          background-color: #3a85f8;
-          height: 40px;
-          border-radius: 15px;
-          justify-content: center;
-          align-items: center;
+          flex: 1;
         `}
-        onPress={() => {
-          formik.handleSubmit();
-        }}
       >
-        <Text
-          style={{
-            color: "white",
+        <Image
+          style={styles.image}
+          source={require("../../assets/escudo.png")}
+        />
+        <AtomInput
+          id="email"
+          label="Email"
+          formik={formik}
+          wrapperWidth="80%"
+        />
+        <AtomInput
+          id="password"
+          label="Contraseña"
+          formik={formik}
+          wrapperWidth="80%"
+          type="password"
+        />
+
+        <AtomButton
+          customCSS={css`
+            width: 80%;
+            background-color: #3a85f8;
+            height: 40px;
+            border-radius: 15px;
+            justify-content: center;
+            align-items: center;
+          `}
+          onPress={() => {
+            console.log("submit");
+            formik.handleSubmit();
           }}
         >
-          Ingresar
-        </Text>
-      </AtomButton>
-      <Image style={styles.logo} source={require("../../assets/logo.png")} />
-    </AtomWrapper>
+          <Text
+            style={{
+              color: "white",
+            }}
+          >
+            Ingresar
+          </Text>
+        </AtomButton>
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
+      </AtomWrapper>
+    </AtomLoadingScreen>
   );
 };
 export default LoginScreen;

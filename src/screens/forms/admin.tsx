@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
+import * as Location from "expo-location";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -18,6 +19,19 @@ import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
 import { v4 as uuid } from "uuid";
 import { CREATE_USER } from "../../Realm/mutations/user";
 import { useMutationRealm } from "../../hooks/useMutationRealm";
+import { LocationObject } from "expo-location";
+import AtomText from "../../components/atoms/AtomText";
+import MapView from "react-native-maps";
+
+const coord = {
+  accuracy: 15.201000213623047,
+  altitude: 421.29998779296875,
+  altitudeAccuracy: 1,
+  heading: 316.14996337890625,
+  latitude: 7.8357326,
+  longitude: -72.4693653,
+  speed: 0.0320296473801136,
+};
 
 const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
   (props) => css`
@@ -36,14 +50,18 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 );
 
 const ScreenFormAdmin: FC = () => {
+  const [location, setLocation] = useState<LocationObject>();
+  const [errorMsg, setErrorMsg] = useState("");
   const [createUser, { data, loading }] = useMutationRealm(CREATE_USER, {
     onComplete: (data) => {
       console.log(`data oncomplete`, data);
     },
   });
   // const [createUser, { data, loading }] = useCreateUser();
+  //
   console.log(`data`, data);
   console.log(`loading`, loading);
+  console.log(`location`, location);
   const formik = useFormik({
     initialValues: {
       name: ``,
@@ -142,6 +160,18 @@ const ScreenFormAdmin: FC = () => {
                 },
               ]}
             />
+            <AtomWrapper
+              customCSS={css`
+                height: 100px;
+              `}
+            >
+              {/* <MapView
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
+              /> */}
+            </AtomWrapper>
             <ButtonAtom
               customCSS={css`
                 width: 80%;

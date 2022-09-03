@@ -141,7 +141,7 @@ const ListAdmin: FC = () => {
         reverse
         containerStyle={Styles.btnContainer}
         onPress={() => {
-          navigation.navigate("formAdmin");
+          navigation.navigate("mapa");
         }}
       />
     </>

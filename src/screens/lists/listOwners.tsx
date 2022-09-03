@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import styled, { css } from "styled-components/native";
 import AtomWrapper from "../../components/atoms/AtomWrapper";
 import { AtomWrapperTypes } from "../../components/atoms/AtomWrapper/types";
@@ -7,6 +7,8 @@ import { Icon } from "@rneui/themed";
 import { useNavigation } from "@react-navigation/native";
 import { navigationScreenProp } from "../../../stack";
 import MoleculeCardUser from "../../components/molecules/MoleculeCardUser";
+import { useQueryRealm } from "../../hooks/useQueryRealm";
+import { GET_ALL_USERS } from "../../Realm/querys/user";
 
 const dataUser = [
   {
@@ -73,6 +75,15 @@ const ButtonAtom = styled.TouchableOpacity<AtomWrapperTypes>(
 
 const ListOwner: FC = () => {
   const navigation = useNavigation<navigationScreenProp>();
+  const { loading: loadLazy, data } = useQueryRealm(GET_ALL_USERS, {
+    filter: [
+      {
+        key: "role",
+        operator: "=",
+        value: "user",
+      },
+    ],
+  });
   return (
     <View
       style={{
@@ -109,11 +120,22 @@ const ListOwner: FC = () => {
           </Text>
           <Icon name="search" color="#4684BE" size={35} />
         </AtomWrapper>
-        <ScrollView>
-          {dataUser.map((item) => (
-            <MoleculeCardUser key={item.document} {...item} />
-          ))}
-        </ScrollView>
+
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => (
+            <MoleculeCardUser
+              {...item}
+              document={item.cc}
+              name={item.name}
+              tel={item.tel}
+            />
+          )}
+          // {data?.map((item) => (
+          //   <MoleculeCardUser key={item.cc} {...item} />
+          // ))}
+        />
 
         <Icon
           type="material-community"

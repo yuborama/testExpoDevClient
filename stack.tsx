@@ -15,6 +15,7 @@ import ListOwner from "./src/screens/lists/listOwners";
 import ListPollster from "./src/screens/lists/listpollster";
 import LoginScreen from "./src/screens/login";
 import { IUser } from "./src/business/models/interfaces/IUser";
+import MapsComponent from "./src/screens/Maps";
 
 export type ExploreStackParams = {
   screen1: undefined;
@@ -27,6 +28,7 @@ export type ExploreStackParams = {
   listOwner: undefined;
   listPollster: undefined;
   login: undefined;
+  mapa: undefined;
 };
 
 const RootStack = createStackNavigator<ExploreStackParams>();
@@ -36,7 +38,9 @@ export type navigationScreenProp = StackNavigationProp<ExploreStackParams>;
 function MyStackCustom() {
   return (
     <NavigationContainer>
-      <RootStack.Navigator initialRouteName="login">
+
+      <RootStack.Navigator initialRouteName="listAdmin">
+        <RootStack.Screen name="mapa" component={MapsComponent} />
         <RootStack.Screen
           name="login"
           component={LoginScreen}
